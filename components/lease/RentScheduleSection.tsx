@@ -84,6 +84,7 @@ export function RentScheduleSection({ leaseData }: RentScheduleSectionProps) {
                   return (
                     <TableRow key={index} className="hover:bg-slate-50">
                       <TableCell className="font-medium">
+                        
                         <Badge variant={
                           actualIndex === 0 ? "success" : 
                           actualIndex === projectedRentData.length - 1 ? "destructive" : 

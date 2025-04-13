@@ -1,4 +1,4 @@
-
+// src/lib/colors.ts
 export const colors = {
     panelBg: '#F8FAFC',
     panelBorder: '#E2E8F0',
@@ -58,18 +58,18 @@ export const colors = {
       border: '#FDE047',
       text: '#854D0E',
     }
-  };
-  
-  // Format currency values consistently
-  export const formatCurrency = (value: number, maximumFractionDigits: number = 2) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits
-    }).format(value);
-  };
-  
-  // Format percentage values
-  export const formatPercentage = (value: number) => {
-    return `${value.toFixed(1)}%`;
-  };
+};
+
+// Format currency values consistently
+export const formatCurrency = (value: number, maximumFractionDigits: number = 2) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits
+  }).format(value);
+};
+
+// Format percentage values
+export const formatPercentage = (value: number) => {
+  return `${value.toFixed(1)}%`;
+};

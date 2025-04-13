@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import LeaseAbstractTab from '../components/lease/LeaseAbstractTab';
+import { Toaster } from 'react-hot-toast';
+import { colors } from "@/utils/styleConstants";
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +13,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto py-8 px-4">
+      <main className="mx-auto py-8 px-4">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-800">280 Richards, Brooklyn, NY</h1>
           <p className="text-gray-600">Deal Screening Overview - Lease Abstract</p>
@@ -42,6 +44,30 @@ const Home: NextPage = () => {
       <footer className="py-6 text-center text-gray-500 text-sm">
         <p>© 2025 Starboard AI - Technical Interview Exercise</p>
       </footer>
+      
+      {/* Toast notifications */}
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: colors.primaryText,
+            color: '#ffffff',
+          },
+          success: {
+            style: {
+              background: colors.risk.low.text,
+              color: '#ffffff',
+            },
+          },
+          error: {
+            style: {
+              background: colors.risk.high.text,
+              color: '#ffffff',
+            },
+          },
+        }}
+      />
     </div>
   );
 };

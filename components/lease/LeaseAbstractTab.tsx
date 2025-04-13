@@ -1,6 +1,7 @@
 // src/components/lease/LeaseAbstractTab.tsx
 "use client";
 
+import { useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LeaseTermsSection } from "./LeaseTermsSection";
 import { RentScheduleSection } from "./RentScheduleSection";
@@ -8,30 +9,80 @@ import { OptionsRecoveriesSection } from "./OptionsRecoveriesSection";
 import { amazonLeaseData } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { FileIcon, Download, Copy } from "lucide-react";
+import { FileIcon, Copy } from "lucide-react";
+import ExportPdfButton from "./ExportPdfButton";
+import toast from "react-hot-toast";
+import { colors } from "@/utils/styleConstants";
 
 export default function LeaseAbstractTab() {
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  const handleCopyToClipboard = async () => {
+    if (!contentRef.current) return;
+    
+    try {
+      // Create a simplified text representation of lease data
+      const textContent = `
+        280 Richards - Lease Abstract
+        
+        TENANT INFORMATION
+        Tenant: ${amazonLeaseData.tenant.name}
+        Guarantor: ${amazonLeaseData.tenant.guarantor}
+        Credit Rating: ${amazonLeaseData.tenant.creditRating}
+        Market Cap: ${amazonLeaseData.tenant.marketCap}
+        
+        LEASE DATES
+        Lease Commencement: ${amazonLeaseData.dates.leaseCommencementDate}
+        Lease Expiration: ${amazonLeaseData.dates.leaseExpirationDate}
+        Remaining Term: ${amazonLeaseData.dates.remainingTerm}
+        
+        RENTAL STRUCTURE
+        Annual Rent: ${amazonLeaseData.financials.annualRent.toLocaleString()}
+        Weighted Average Rent PSF: ${amazonLeaseData.financials.weightedAverageRentPSF.toFixed(2)}
+        Annual Escalations: ${amazonLeaseData.financials.annualEscalations}
+        
+        OPTIONS
+        Renewal Options: ${amazonLeaseData.options.renewalOptions}
+        Other Options: ${amazonLeaseData.options.otherOptions}
+        
+        RECOVERY STRUCTURE
+        Real Estate Taxes: ${amazonLeaseData.recoveryStructure.realEstateTaxes}
+        CAM: ${amazonLeaseData.recoveryStructure.CAM}
+        Insurance: ${amazonLeaseData.recoveryStructure.insurance}
+        Management Fee: ${amazonLeaseData.recoveryStructure.managementFee}
+      `;
+      
+      await navigator.clipboard.writeText(textContent);
+      toast.success("Lease summary copied to clipboard");
+    } catch (error) {
+      console.error("Error copying to clipboard:", error);
+      toast.error("Could not copy content to clipboard");
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">
-      <Tabs defaultValue="lease-terms" className="w-full">
-        <TabsList className="mb-6 grid w-full grid-cols-3">
-          <TabsTrigger value="lease-terms">Lease Terms</TabsTrigger>
-          <TabsTrigger value="rent-schedule">Rent Schedule</TabsTrigger>
-          <TabsTrigger value="options">Options & Recoveries</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="lease-terms">
-          <LeaseTermsSection leaseData={amazonLeaseData} />
-        </TabsContent>
-        
-        <TabsContent value="rent-schedule">
-          <RentScheduleSection leaseData={amazonLeaseData} />
-        </TabsContent>
-        
-        <TabsContent value="options">
-          <OptionsRecoveriesSection leaseData={amazonLeaseData} />
-        </TabsContent>
-      </Tabs>
+      <div ref={contentRef}>
+        <Tabs defaultValue="lease-terms" className="w-full">
+          <TabsList className="mb-6 grid w-full grid-cols-3">
+            <TabsTrigger value="lease-terms">Lease Terms</TabsTrigger>
+            <TabsTrigger value="rent-schedule">Rent Schedule</TabsTrigger>
+            <TabsTrigger value="options">Options & Recoveries</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="lease-terms">
+            <LeaseTermsSection leaseData={amazonLeaseData} />
+          </TabsContent>
+          
+          <TabsContent value="rent-schedule">
+            <RentScheduleSection leaseData={amazonLeaseData} />
+          </TabsContent>
+          
+          <TabsContent value="options">
+            <OptionsRecoveriesSection leaseData={amazonLeaseData} />
+          </TabsContent>
+        </Tabs>
+      </div>
 
       <Separator className="my-6" />
       
@@ -44,12 +95,22 @@ export default function LeaseAbstractTab() {
           </a>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="gap-1">
-            <Download size={14} />
-            <span>Export PDF</span>
-          </Button>
-          <Button variant="outline" size="sm" className="gap-1">
-            <Copy size={14} />
+          <ExportPdfButton 
+            leaseData={amazonLeaseData}
+            containerRef={contentRef}
+          />
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="gap-1"
+            style={{
+              backgroundColor: colors.table.rowEvenBg,
+              color: colors.primaryText,
+              borderColor: colors.panelBorder
+            }}
+            onClick={handleCopyToClipboard}
+          >
+            <Copy size={14} style={{ color: colors.secondaryText }} />
             <span>Copy to Clipboard</span>
           </Button>
         </div>
