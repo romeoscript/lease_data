@@ -10,7 +10,8 @@ import { colors } from "@/utils/styleConstants";
 
 interface ExportPdfButtonProps {
   leaseData: LeaseData;
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  className?: string;
 }
 
 export default function ExportPdfButton({ leaseData, containerRef }: ExportPdfButtonProps) {
@@ -25,7 +26,7 @@ export default function ExportPdfButton({ leaseData, containerRef }: ExportPdfBu
     try {
       setIsExporting(true);
       
-      // Dynamically import libraries only when needed to reduce initial bundle size
+  
       const [html2canvasModule, jsPDFModule] = await Promise.all([
         import("html2canvas-pro"),
         import("jspdf")
@@ -34,7 +35,7 @@ export default function ExportPdfButton({ leaseData, containerRef }: ExportPdfBu
       const html2canvas = html2canvasModule.default;
       const jsPDF = jsPDFModule.default;
       
-      // Create filename with property name and date
+     
       const propertyAddress = leaseData?.property?.address || "Property";
       const fileName = `${propertyAddress.toString().replace(/\s+/g, '_')}_Lease_Abstract_${new Date().toISOString().split('T')[0]}.pdf`;
       
@@ -53,8 +54,8 @@ export default function ExportPdfButton({ leaseData, containerRef }: ExportPdfBu
         logging: false,
         allowTaint: true,
         backgroundColor: "#ffffff",
-        // html2canvas-pro has better handling of fonts and SVG
-        imageTimeout: 15000, // Longer timeout for complex charts
+
+        imageTimeout: 15000, 
         ignoreElements: (element) => {
           // Ignore any elements we don't want in the PDF
           return element.classList.contains('pdf-ignore');

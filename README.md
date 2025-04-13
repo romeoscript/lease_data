@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lease Abstract Tab Implementation
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Implemented Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 📁 Structured Data Presentation
+- Created three tabs: **Lease Terms**, **Rent Schedule**, **Options & Recoveries** to logically organize information
+- Designed visual cards to display key tenant information, lease dates, rental structure, and risk assessments
+- Implemented responsive grid layouts that adapt to different screen sizes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📊 Interactive Data Visualization
+- Added a dynamic **rent projection chart** showing both contract rent and market rent trends
+- Implemented a comprehensive **rent schedule table** with toggle between key years and all years
+- Included visual indicators for lease quality: **credit**, **term length**, **location**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📄 PDF Export Functionality
+- Created a robust PDF export feature using `html2canvas-pro` and `jsPDF`
+- Ensured the exported PDF maintains **visual consistency** with the web view
+- Added **toast notifications** to provide feedback during the export process
 
-## Learn More
+### 🧑‍💻 Enhanced User Experience
+- Implemented a **PDF viewer modal** for the source document
+- Added **copy-to-clipboard** functionality for easy sharing of lease information
+- Ensured all components are **fully responsive** for both desktop and mobile
+- Highlighted **risk factors** like market-to-market potential at lease expiration
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Technical Decisions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Modular Component Structure**: Created separate components for each section to improve maintainability and code organization
+- **Type-Safe Data Handling**: Used TypeScript interfaces to ensure data consistency across components
+- **Consistent Styling**: Implemented a centralized color system to maintain visual consistency
+- **Responsive Design**: Used Tailwind's responsive utilities and custom media queries to ensure a great experience on all devices
+- **Optimized PDF Generation**: Used `html2canvas-pro` for better rendering quality and handled multi-page PDFs for extensive content
+- **Performance Optimization**: Implemented dynamic imports to load heavy libraries only when needed
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

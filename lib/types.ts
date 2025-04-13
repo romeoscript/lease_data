@@ -10,6 +10,7 @@ export interface LeaseData {
       name: string;
       location: string;
       size: string;
+      address?: string; 
       components: {
         type: string;
         sf: number;

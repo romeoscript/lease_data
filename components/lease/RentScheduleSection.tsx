@@ -1,4 +1,4 @@
-// src/components/lease/RentScheduleSection.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -80,13 +80,13 @@ export function RentScheduleSection({ leaseData }: RentScheduleSectionProps) {
                   const annualRent = (data.warehouseRent * leaseData.property.components[0].sf) + 
                                     (data.parkingRent * leaseData.property.components[1].sf);
                   const monthlyRent = annualRent / 12;
-                  
+             
                   return (
                     <TableRow key={index} className="hover:bg-slate-50">
                       <TableCell className="font-medium">
-                        
+                     
                         <Badge variant={
-                          actualIndex === 0 ? "success" : 
+                          actualIndex === 0 ? "secondary" : 
                           actualIndex === projectedRentData.length - 1 ? "destructive" : 
                           "default"
                         } className="whitespace-nowrap">
