@@ -180,7 +180,7 @@ export function LeaseTermsSection({ leaseData }: LeaseTermsSectionProps) {
                     tickFormatter={(value) => `$${value}`}
                   />
                   <Tooltip 
-                    formatter={(value: any) => [formatCurrency(value as number), 'Rent PSF']}
+                    formatter={(value: number) => [formatCurrency(value as number), 'Rent PSF']}
                     labelFormatter={(value) => `Year ${value}`}
                   />
                   <Legend 

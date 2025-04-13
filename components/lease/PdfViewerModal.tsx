@@ -8,7 +8,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download, X, ArrowLeft, ArrowRight, ZoomIn, ZoomOut } from "lucide-react";
+import { Download,  ArrowLeft, ArrowRight, ZoomIn, ZoomOut } from "lucide-react";
 import { colors } from "@/utils/styleConstants";
 
 interface PdfViewerModalProps {
@@ -107,7 +107,7 @@ export default function PdfViewerModal({
             src={pdfPath}
             className="w-full h-full bg-white shadow-lg"
             onLoad={(e) => {
-             
+             console.log(e)
               if (totalPages === 0) {
                 setTotalPages(19); 
               }

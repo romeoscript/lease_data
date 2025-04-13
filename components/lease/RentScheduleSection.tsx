@@ -1,8 +1,7 @@
-
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { InfoIcon, LineChart as LineChartIcon, TrendingUp } from "lucide-react";
@@ -115,7 +114,7 @@ export function RentScheduleSection({ leaseData }: RentScheduleSectionProps) {
           
           {!viewAllYears && (
             <div className="text-center mt-2 text-xs text-muted-foreground">
-              Showing selected years. Click "Show All Years" to view complete schedule.
+              Showing selected years. Click &quot;Show All Years&quot; to view complete schedule.
             </div>
           )}
         </CardContent>
@@ -158,7 +157,7 @@ export function RentScheduleSection({ leaseData }: RentScheduleSectionProps) {
                   tickFormatter={(value) => `$${value}`}
                 />
                 <Tooltip 
-                  formatter={(value: any) => [formatCurrency(value as number), 'Rent PSF']}
+                  formatter={(value) => [formatCurrency(Number(value)), 'Rent PSF']}
                   labelFormatter={(value) => `Year ${value}`}
                 />
                 <Legend 
@@ -238,7 +237,7 @@ export function RentScheduleSection({ leaseData }: RentScheduleSectionProps) {
             the lease term.
           </p>
           <p>
-            Amazon's lease terms were negotiated in 2019, and since then, average Class A rents 
+            Amazon&apos;s lease terms were negotiated in 2019, and since then, average Class A rents 
             have increased significantly to $40+ PSF in the NYC boroughs. This presents a strong 
             mark-to-market opportunity at lease expiration, with potential for substantial income growth.
           </p>

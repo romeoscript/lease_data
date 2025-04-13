@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell,  TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { LeaseData } from "@/lib/utils";
 import { 
@@ -122,7 +122,7 @@ export function OptionsRecoveriesSection({ leaseData }: OptionsRecoveriesSection
             <CardContent className="pt-0">
               <p className="text-gray-700 text-sm leading-relaxed">
                 The lease has a modified triple-net structure with the tenant responsible for taxes and 
-                CAM, while insurance and management fees are landlord's responsibility. This structure 
+                CAM, while insurance and management fees are landlord &apos;s responsibility. This structure 
                 is relatively standard for institutional-grade logistics assets leased to credit tenants.
               </p>
             </CardContent>
@@ -152,7 +152,7 @@ export function OptionsRecoveriesSection({ leaseData }: OptionsRecoveriesSection
               </CardHeader>
               <CardContent className="pt-1">
                 <p className="text-sm text-green-800">
-                  Amazon's <span className="font-semibold">{leaseData.tenant.creditRating}</span> credit rating and <span className="font-semibold">{leaseData.tenant.marketCap}</span> market cap provides exceptional tenant security
+                  Amazon&apos;s <span className="font-semibold">{leaseData.tenant.creditRating}</span> credit rating and <span className="font-semibold">{leaseData.tenant.marketCap}</span> market cap provides exceptional tenant security
                 </p>
               </CardContent>
             </Card>
