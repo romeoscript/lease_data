@@ -1,4 +1,4 @@
-// src/components/lease/ExportPdfButton.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -105,8 +105,8 @@ export default function ExportPdfButton({ leaseData, containerRef }: ExportPdfBu
         }
       });
       
-      // Calculate PDF dimensions - use A4 ratio but scale based on content width
-      const pdfWidth = 210; // A4 width in mm
+
+      const pdfWidth = 210; 
       const pdfHeight = (height * pdfWidth) / width;
       
       // Create PDF instance with appropriate dimensions

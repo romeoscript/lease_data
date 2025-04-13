@@ -1,6 +1,4 @@
-// src/components/lease/PdfViewerModal.tsx
 "use client";
-
 import { useState } from "react";
 import {
   Dialog,

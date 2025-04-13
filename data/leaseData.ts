@@ -1,7 +1,6 @@
-// src/data/leaseData.ts
 import { LeaseData } from '../utils/leaseHelpers';
 
-// Data extracted from the 280 Richards - OM.pdf document
+
 export const amazonLeaseData: LeaseData = {
   tenant: {
     name: "Amazon.com Services LLC",
