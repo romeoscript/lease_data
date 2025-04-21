@@ -28,7 +28,7 @@ This project demonstrates a full-stack implementation that extracts structured d
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/lease-data-extractor.git
+git clone https://github.com/romeoscript/lease_data.git
 cd lease-data-extractor
 ```
 
