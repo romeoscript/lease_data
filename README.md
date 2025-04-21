@@ -1,40 +1,84 @@
-# Lease Abstract Tab Implementation
+# Full-Stack Lease Data Extraction System
 
+## 📋 Overview
 
+This project demonstrates a full-stack implementation that extracts structured data from commercial real estate Offering Memorandum (OM) PDFs. Users can upload PDF documents, and the system will automatically extract key lease information and display it in an organized interface.
 
-## 🚀 Implemented Features
+## 📊 Key Features
 
-### 📁 Structured Data Presentation
-- Created three tabs: **Lease Terms**, **Rent Schedule**, **Options & Recoveries** to logically organize information
-- Designed visual cards to display key tenant information, lease dates, rental structure, and risk assessments
-- Implemented responsive grid layouts that adapt to different screen sizes
+### Backend
+- PDF validation to identify legitimate Offering Memorandums
+- Extraction of property details, tenant information, lease terms, and financial data
+- Confidence scoring for data reliability assessment
+- Detailed extraction metadata and warnings for low-confidence data
 
-### 📊 Interactive Data Visualization
-- Added a dynamic **rent projection chart** showing both contract rent and market rent trends
-- Implemented a comprehensive **rent schedule table** with toggle between key years and all years
-- Included visual indicators for lease quality: **credit**, **term length**, **location**
+### Frontend
+- Intuitive PDF upload interface with drag-and-drop capability
+- Real-time progress indicators for upload and processing
+- Comprehensive error handling with specific error messages
+- Visual confidence scoring for extraction quality
 
-### 📄 PDF Export Functionality
-- Created a robust PDF export feature using `html2canvas-pro` and `jsPDF`
-- Ensured the exported PDF maintains **visual consistency** with the web view
-- Added **toast notifications** to provide feedback during the export process
+## 🚀 How to Run the Project
 
-### 🧑‍💻 Enhanced User Experience
-- Implemented a **PDF viewer modal** for the source document
-- Added **copy-to-clipboard** functionality for easy sharing of lease information
-- Ensured all components are **fully responsive** for both desktop and mobile
-- Highlighted **risk factors** like market-to-market potential at lease expiration
+### Prerequisites
+- Node.js v18+
+- npm or yarn
 
----
+### Installation and Setup
 
-## ⚙️ Technical Decisions
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/lease-data-extractor.git
+cd lease-data-extractor
+```
 
-- **Modular Component Structure**: Created separate components for each section to improve maintainability and code organization
-- **Type-Safe Data Handling**: Used TypeScript interfaces to ensure data consistency across components
-- **Consistent Styling**: Implemented a centralized color system to maintain visual consistency
-- **Responsive Design**: Used Tailwind's responsive utilities and custom media queries to ensure a great experience on all devices
-- **Optimized PDF Generation**: Used `html2canvas-pro` for better rendering quality and handled multi-page PDFs for extensive content
-- **Performance Optimization**: Implemented dynamic imports to load heavy libraries only when needed
+2. Install dependencies
+```bash
+npm install
+```
 
----
+3. Start the development server
+```bash
+npm run dev
+```
 
+4. Open your browser and navigate to:
+```
+http://localhost:3000
+```
+
+## 📋 Using the Application
+
+1. **Accessing the Upload Feature**:
+   - The PDF upload component is located at the bottom of the main page, below the lease data display area
+   - Look for the card titled "Upload Offering Memorandum"
+
+2. **Uploading a PDF**:
+   - Click the "Select PDF File" button or drag and drop a PDF onto the upload area
+   - Select an Offering Memorandum PDF (like the provided 280 Richards OM.pdf)
+   - Click "Extract Data" to begin processing
+
+3. **Viewing Extracted Data**:
+   - Once processing completes, the lease data tabs at the top will automatically update
+   - The property name in the header will change to reflect the extracted property
+   - You can view extraction quality metrics in the success summary
+
+4. **Reviewing Extraction Quality**:
+   - The system provides confidence scores for each extracted field
+   - Any low-confidence extractions will be highlighted with warnings
+   - You can view detailed extraction metadata to assess data reliability
+
+## 🏗️ Architecture
+
+- **Frontend**: React/Next.js with TypeScript and Tailwind CSS
+- **Backend**: Next.js API routes for PDF processing
+- **PDF Processing**: pdf.js for extraction, with regex pattern matching for data identification
+- **State Management**: React hooks with custom extraction logic in a dedicated hook
+
+## 💡 Technical Approach
+
+- Used a custom hook (`usePDFProcessor`) to separate business logic from UI components
+- Implemented modular components for better maintainability
+- Added comprehensive error handling for various failure scenarios
+- Designed an intuitive UI with clear feedback mechanisms
+- Structured code to handle the complexities of PDF extraction with graceful fallbacks
