@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LeaseTermsSection } from "./LeaseTermsSection";
 import { RentScheduleSection } from "./RentScheduleSection";
 import { OptionsRecoveriesSection } from "./OptionsRecoveriesSection";
-import { amazonLeaseData } from "@/lib/data";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { FileIcon, Copy } from "lucide-react";
@@ -14,12 +13,35 @@ import PdfViewerModal from "./PdfViewerModal";
 import toast from "react-hot-toast";
 import { colors } from "@/utils/styleConstants";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { LeaseData } from "@/lib/types";
 
-export default function LeaseAbstractTab() {
+interface LeaseAbstractTabProps {
+  leaseData: LeaseData;
+  sourceDocument?: {
+    fileName: string;
+    filePath?: string;
+  };
+}
+
+export default function LeaseAbstractTab({ 
+  leaseData, 
+  sourceDocument = { fileName: "280 Richards - OM.pdf", filePath: "/280-Richards-OM.pdf" } 
+}: LeaseAbstractTabProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const isSmallScreen = useMediaQuery("(max-width: 640px)");
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
-  const pdfPath = "/280-Richards-OM.pdf"; 
+  const [pdfPath, setPdfPath] = useState(sourceDocument.filePath || "/280-Richards-OM.pdf");
+  const [documentTitle, setDocumentTitle] = useState(sourceDocument.fileName || "280 Richards - OM.pdf");
+  
+  // Update source document when props change
+  useEffect(() => {
+    if (sourceDocument) {
+      setDocumentTitle(sourceDocument.fileName);
+      if (sourceDocument.filePath) {
+        setPdfPath(sourceDocument.filePath);
+      }
+    }
+  }, [sourceDocument]);
   
   const handleCopyToClipboard = async () => {
     if (!contentRef.current) return;
@@ -27,33 +49,33 @@ export default function LeaseAbstractTab() {
     try {
       // Create a simplified text representation of lease data
       const textContent = `
-        280 Richards - Lease Abstract
+        ${leaseData.property.name} - Lease Abstract
         
         TENANT INFORMATION
-        Tenant: ${amazonLeaseData.tenant.name}
-        Guarantor: ${amazonLeaseData.tenant.guarantor}
-        Credit Rating: ${amazonLeaseData.tenant.creditRating}
-        Market Cap: ${amazonLeaseData.tenant.marketCap}
+        Tenant: ${leaseData.tenant.name}
+        Guarantor: ${leaseData.tenant.guarantor}
+        Credit Rating: ${leaseData.tenant.creditRating}
+        Market Cap: ${leaseData.tenant.marketCap}
         
         LEASE DATES
-        Lease Commencement: ${amazonLeaseData.dates.leaseCommencementDate}
-        Lease Expiration: ${amazonLeaseData.dates.leaseExpirationDate}
-        Remaining Term: ${amazonLeaseData.dates.remainingTerm}
+        Lease Commencement: ${leaseData.dates.leaseCommencementDate}
+        Lease Expiration: ${leaseData.dates.leaseExpirationDate}
+        Remaining Term: ${leaseData.dates.remainingTerm}
         
         RENTAL STRUCTURE
-        Annual Rent: ${amazonLeaseData.financials.annualRent.toLocaleString()}
-        Weighted Average Rent PSF: ${amazonLeaseData.financials.weightedAverageRentPSF.toFixed(2)}
-        Annual Escalations: ${amazonLeaseData.financials.annualEscalations}
+        Annual Rent: ${leaseData.financials.annualRent.toLocaleString()}
+        Weighted Average Rent PSF: ${leaseData.financials.weightedAverageRentPSF.toFixed(2)}
+        Annual Escalations: ${leaseData.financials.annualEscalations}
         
         OPTIONS
-        Renewal Options: ${amazonLeaseData.options.renewalOptions}
-        Other Options: ${amazonLeaseData.options.otherOptions}
+        Renewal Options: ${leaseData.options.renewalOptions}
+        Other Options: ${leaseData.options.otherOptions}
         
         RECOVERY STRUCTURE
-        Real Estate Taxes: ${amazonLeaseData.recoveryStructure.realEstateTaxes}
-        CAM: ${amazonLeaseData.recoveryStructure.CAM}
-        Insurance: ${amazonLeaseData.recoveryStructure.insurance}
-        Management Fee: ${amazonLeaseData.recoveryStructure.managementFee}
+        Real Estate Taxes: ${leaseData.recoveryStructure.realEstateTaxes}
+        CAM: ${leaseData.recoveryStructure.CAM}
+        Insurance: ${leaseData.recoveryStructure.insurance}
+        Management Fee: ${leaseData.recoveryStructure.managementFee}
       `;
       
       await navigator.clipboard.writeText(textContent);
@@ -83,15 +105,15 @@ export default function LeaseAbstractTab() {
           </div>
           
           <TabsContent value="lease-terms">
-            <LeaseTermsSection leaseData={amazonLeaseData} />
+            <LeaseTermsSection leaseData={leaseData} />
           </TabsContent>
           
           <TabsContent value="rent-schedule">
-            <RentScheduleSection leaseData={amazonLeaseData} />
+            <RentScheduleSection leaseData={leaseData} />
           </TabsContent>
           
           <TabsContent value="options">
-            <OptionsRecoveriesSection leaseData={amazonLeaseData} />
+            <OptionsRecoveriesSection leaseData={leaseData} />
           </TabsContent>
         </Tabs>
       </div>
@@ -106,13 +128,12 @@ export default function LeaseAbstractTab() {
             onClick={() => setIsPdfModalOpen(true)}
             className="text-blue-600 hover:underline truncate cursor-pointer"
           >
-            280 Richards - OM.pdf
+            {documentTitle}
           </button>
         </div>
         <div className={`flex ${isSmallScreen ? 'w-full' : ''} gap-2`}>
           <ExportPdfButton 
-            leaseData={amazonLeaseData}
-    
+            leaseData={leaseData}
             containerRef={contentRef}
             className={isSmallScreen ? 'flex-1' : ''}
           />
@@ -139,7 +160,7 @@ export default function LeaseAbstractTab() {
         isOpen={isPdfModalOpen}
         onClose={() => setIsPdfModalOpen(false)}
         pdfPath={pdfPath}
-        documentTitle="280 Richards - Offering Memorandum"
+        documentTitle={`${leaseData.property.name} - Offering Memorandum`}
       />
     </div>
   );
